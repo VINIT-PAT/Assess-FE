@@ -1,0 +1,49 @@
+.take-test-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .question-container {
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    padding: 15px;
+    background-color: #f9f9f9;
+  }
+  
+  .question-container h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .question-container p {
+    margin-bottom: 15px;
+  }
+  
+  .submit-button,
+  .submit-all-button {
+    margin-top: 10px;
+    padding: 8px 15px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .output-container {
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    padding: 15px;
+    background-color: #f0f0f0;
+  }
+  
+  .output-container h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .output {
+    white-space: pre-wrap;
+    font-size: 14px;
+  }
+  

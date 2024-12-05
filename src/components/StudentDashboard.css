@@ -1,0 +1,158 @@
+/* Custom Styles for Student Dashboard */
+.student-dashboard {
+
+    /* Ensuring the left section image fills the left half */
+    .dashboard-image {
+        object-fit: cover; /* Ensures the image covers the container and doesn't stretch */
+        height: 100vh; /* Ensures the image covers the full height of the viewport */
+        width: 100%; /* Ensures the image covers the entire width of the left section */
+    }
+    
+    /* Right section with cards */
+    .card {
+        border-radius: 15px;
+        transition: all 0.3s ease-in-out;
+        padding: 20px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.2));
+    }
+    
+    /* Card body padding */
+    .card-body {
+        padding: 1rem; /* Reduced padding for smaller cards */
+    }
+    
+    /* Card title */
+    .card-title {
+        font-weight: bold;
+        font-size: 1.25rem; /* Reduced font size for smaller cards */
+        color: white;
+    }
+    
+    /* Card text */
+    .card-text {
+        color: #495057;
+        font-size: 1rem; /* Adjusted font size */
+    }
+    
+    /* Button primary styling */
+    .btn-primary {
+        background-color: #007bff;
+        color: white;
+        font-weight: 600;
+        border-radius: 30px;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+    
+    /* Button hover effect */
+    .btn-primary:hover {
+        background-color: #0056b3;
+        transform: scale(1.05);
+    }
+    
+    /* Card icon styling */
+    .card-icon {
+        width: 60px;
+        height: 60px;
+        background-color: #fff;
+        transition: transform 0.3s ease;
+    }
+    
+    /* Card icon hover effect */
+    .card-icon:hover {
+        transform: scale(1.1);
+    }
+    
+    /* Icon container flex */
+    .icon-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    /* Header styling */
+    h1.display-4 {
+        font-size: 2.75rem;
+        font-weight: 700;
+        color: #212529;
+    }
+    
+    /* Paragraph styling */
+    p.lead {
+        font-size: 1.25rem;
+        color: #f8f9fa;
+    }
+    
+    /* Card custom hover effects */
+    .card-custom:hover {
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        transform: translateY(-10px);
+    }
+    
+    /* Brighter gradient for the background */
+    .bg-warning {
+        background: linear-gradient(135deg, #ffeb3b, #ff9800); /* Brighter yellow gradient */
+    }
+    
+    /* Ensure full height layout */
+    .vh-100 {
+        height: 100vh;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        /* Stack columns vertically on smaller screens */
+        .col-md-6 {
+            padding: 0;
+            flex: 0 0 100%;
+        }
+    
+        .dashboard-image {
+            height: 50vh; /* Reduce image height on smaller screens */
+        }
+    
+        h1.display-4 {
+            font-size: 2.2rem; /* Adjust heading font size */
+        }
+    
+        .card-title {
+            font-size: 1.15rem; /* Smaller card titles */
+        }
+    
+        .card-text {
+            font-size: 0.9rem; /* Adjust card text size */
+        }
+    
+        .btn-primary {
+            font-size: 1rem; /* Adjust button size */
+        }
+    
+        .icon-container {
+            margin-bottom: 1rem;
+        }
+    }
+    
+    @media (max-width: 576px) {
+        /* Further adjustments for mobile devices */
+        .dashboard-image {
+            height: 40vh; /* Reduce image height further for mobile screens */
+        }
+    
+        h1.display-4 {
+            font-size: 1.75rem; /* Smaller heading on mobile */
+        }
+    
+        .card-title {
+            font-size: 1rem; /* Further reduce card title font size */
+        }
+    
+        .card-text {
+            font-size: 0.85rem; /* Adjust card text size */
+        }
+    
+        .btn-primary {
+            font-size: 0.9rem; /* Further reduce button size */
+        }
+    }
+  }
+  

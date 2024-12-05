@@ -1,0 +1,95 @@
+/* Ensure the body and html take up the full height */
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Background Wrapper to hold the background image */
+  .background-wrapper {
+    background-image: url('../assets/images/Subs2.jpg');
+    background-size: cover; /* Ensures the image covers the whole screen */
+    background-repeat: repeat; /* Prevent repeating the image */
+    background-position: center center; /* Center the image */
+    min-height: 100vh; /* Ensure it covers the full height of the viewport */
+    position: relative; /* For positioning child elements on top */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Align content to the top */
+    width: 100%;
+  }
+  
+  /* Content Wrapper to contain all the actual content */
+  .content-wrapper {
+    background-image: url('../assets/images/Subs.jpg');
+    background-size: cover; /* Ensures the image covers the whole screen */
+    background-repeat: repeat; /* Prevent repeating the image */
+    background-position: center ; /* Center the image */
+    min-height: 100vh; 
+    width: 100%;
+    min-height: 100vh; /* Ensure it takes at least the full height */
+    padding: 20px;
+    position: absolute; /* Position content on top of the background */
+    top: 0;
+    left: 0;
+  }
+  
+  /* Style for the title */
+  .student-submissions .fancy-title {
+    color: #ff6347; /* Tomato color */
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    font-size: 36px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+    margin-top: 20px;
+  }
+  
+  /* Style for the alert box */
+  .student-submissions .fancy-alert {
+    background-color: rgba(255, 99, 71, 0.8); /* Tomato color with transparency */
+    border: 1px solid #ff6347;
+    color: white;
+    font-weight: bold;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  /* Style for each submission card */
+  .student-submissions .fancy-card {
+    background-color: rgba(255, 255, 255, 0.8); /* White with slight transparency */
+    border: 1px solid #ff8c00;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+  }
+  
+  /* Style for the card title */
+  .student-submissions .fancy-card-title {
+    color: #ff6347; /* Tomato color */
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
+  
+  /* Style for the card text */
+  .student-submissions .fancy-card-text {
+    color: #333;
+    font-size: 1rem;
+    margin: 10px 0;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  /* Style for the button */
+  .student-submissions .fancy-btn {
+    background-color: #ff8c00; /* Orange */
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 10px 20px;
+    width: 75%;
+    transition: background-color 0.3s;
+  }
+  
+  .student-submissions .fancy-btn:hover {
+    background-color: #ff6347; /* Tomato color on hover */
+  }
+  
