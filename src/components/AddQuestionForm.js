@@ -4,7 +4,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import backimage from '../assets/images/Ques2.jpg'; // Ensure the correct path to the background image
-require('dotenv').config();
 
 const AddQuestionForm = () => {
   const [title, setTitle] = useState('');

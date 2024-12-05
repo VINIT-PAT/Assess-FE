@@ -1,4 +1,5 @@
-{ "homepage": "https://VINIT-PAT.github.io/Assess-FE",
+{
+  "homepage": "https://VINIT-PAT.github.io/Assess-FE",
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
@@ -33,12 +34,12 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+"start": "craco start",
+  "build": "craco build",
+  "test": "craco test",
+  "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build" 
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -48,7 +49,7 @@
   },
   "browserslist": {
     "production": [
-      ">0.2%",
+      "\u003E0.2%",
       "not dead",
       "not op_mini all"
     ],
@@ -59,6 +60,7 @@
     ]
   },
   "devDependencies": {
+    "@craco/craco": "^7.1.0",
     "gh-pages": "^6.2.0"
   }
 }
