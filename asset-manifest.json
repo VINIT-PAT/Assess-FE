@@ -1,0 +1,35 @@
+{
+  "files": {
+    "main.css": "/Assess-FE/static/css/main.39770f3e.css",
+    "main.js": "/Assess-FE/static/js/main.bd84ce23.js",
+    "static/js/453.8ab44547.chunk.js": "/Assess-FE/static/js/453.8ab44547.chunk.js",
+    "static/media/Exam-logo.jpg": "/Assess-FE/static/media/Exam-logo.923bba8db2db63c91e54.jpg",
+    "static/media/Ques3.jpg": "/Assess-FE/static/media/Ques3.aa6b5759393b14579f8c.jpg",
+    "static/media/Subs2.jpg": "/Assess-FE/static/media/Subs2.fa863fd51f767c8bc030.jpg",
+    "static/media/testback3.jpg": "/Assess-FE/static/media/testback3.26f6784662c5a6052351.jpg",
+    "static/media/List1.jpg": "/Assess-FE/static/media/List1.95d4658e4e6f4bd0f5ce.jpg",
+    "static/media/Ques4.jpg": "/Assess-FE/static/media/Ques4.13b6b8aa23b1a6c53649.jpg",
+    "static/media/Student-2.jpg": "/Assess-FE/static/media/Student-2.84437258534c0cde5bc4.jpg",
+    "static/media/Ques2.jpg": "/Assess-FE/static/media/Ques2.6a1237aca6390508958a.jpg",
+    "static/media/question.jpg": "/Assess-FE/static/media/question.cfd71e7e99af3498c883.jpg",
+    "static/media/Subs.jpg": "/Assess-FE/static/media/Subs.a07f2cba34beb0e6b619.jpg",
+    "static/media/Test.jpg": "/Assess-FE/static/media/Test.384c36015eea8b2efa73.jpg",
+    "static/media/Teacherbck.jpg": "/Assess-FE/static/media/Teacherbck.5f069dcd7fe0a4bef381.jpg",
+    "static/media/seo5.jpg": "/Assess-FE/static/media/seo5.c44d7b0a99103c0178c4.jpg",
+    "static/media/back2.jpg": "/Assess-FE/static/media/back2.4c3acc1622ec302a5216.jpg",
+    "static/media/Teacher.png": "/Assess-FE/static/media/Teacher.c9b8f6be6fee733e1eaa.png",
+    "static/media/Sub.jpg": "/Assess-FE/static/media/Sub.d58134b36c3adfa8392a.jpg",
+    "static/media/submission.jpg": "/Assess-FE/static/media/submission.e0ebfdd08996f0fc0ae6.jpg",
+    "static/media/7990.jpg": "/Assess-FE/static/media/7990.6f44dc6f088886f8391a.jpg",
+    "static/media/bootstrap-icons.woff?": "/Assess-FE/static/media/bootstrap-icons.39795c0b4513de014cf8.woff",
+    "static/media/bootstrap-icons.woff2?": "/Assess-FE/static/media/bootstrap-icons.b7bcc075b395c14ce8c2.woff2",
+    "index.html": "/Assess-FE/index.html",
+    "main.39770f3e.css.map": "/Assess-FE/static/css/main.39770f3e.css.map",
+    "main.bd84ce23.js.map": "/Assess-FE/static/js/main.bd84ce23.js.map",
+    "453.8ab44547.chunk.js.map": "/Assess-FE/static/js/453.8ab44547.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.39770f3e.css",
+    "static/js/main.bd84ce23.js"
+  ]
+}
