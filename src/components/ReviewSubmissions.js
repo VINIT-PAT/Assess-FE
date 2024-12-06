@@ -86,7 +86,7 @@ const ReviewSubmissions = () => {
   useEffect(() => {
     const fetchSubmissions = async () => {
       try {
-        const response = await axios.get(`${API_BASE_URL}/submissions`);
+        const response = await axios.get(`${API_BASE_URL}/api/submissions`);
         setSubmissions(response.data);
       } catch (error) {
         console.error("Error fetching submissions:", error);
@@ -101,7 +101,7 @@ const ReviewSubmissions = () => {
     if (!submission) return;
 
     try {
-      await axios.put(`${API_BASE_URL}/submissions/${submissionId}/marks`, {
+      await axios.put(`${API_BASE_URL}/api/submissions/${submissionId}/marks`, {
         marks: submission.marks,
         comments: submission.comments,
       });
@@ -135,7 +135,7 @@ const ReviewSubmissions = () => {
     }
 
     try {
-      await axios.delete(`${API_BASE_URL}/submissions/${submissionId}`);
+      await axios.delete(`${API_BASE_URL}/api/submissions/${submissionId}`);
       setSubmissions((prev) => prev.filter((sub) => sub._id !== submissionId));
       alert("Submission deleted successfully!");
     } catch (error) {
