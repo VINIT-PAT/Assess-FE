@@ -16,6 +16,9 @@ import TakeTest from './components/TakeTest';
 import SubmitSolution from './components/SubmitSolution';
 import SelectedQuestionsPage from './components/SelectedQuestionsPage';
 
+// Backend URL from environment variable
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userRole, setUserRole] = useState(null); // 'teacher' or 'student'
@@ -37,18 +40,27 @@ function App() {
           {/* Teacher Routes */}
           {isAuthenticated && userRole === 'teacher' ? (
             <>
-              <Route path="/teacher-dashboard" element={<TeacherDashboard />} />
-              <Route path="/add-question" element={<AddQuestionForm />} />
-              <Route path="/review-submissions" element={<ReviewSubmissions />} />
+              <Route path="/teacher-dashboard" element={<TeacherDashboard backendUrl={BACKEND_URL} />} />
+              <Route path="/add-question" element={<AddQuestionForm backendUrl={BACKEND_URL} />} />
+              <Route path="/review-submissions" element={<ReviewSubmissions backendUrl={BACKEND_URL} />} />
               <Route
                 path="/questions"
                 element={
-                  <QuestionList onSelect={setSelectedQuestions} selectedQuestions={selectedQuestions} />
+                  <QuestionList
+                    backendUrl={BACKEND_URL}
+                    onSelect={setSelectedQuestions}
+                    selectedQuestions={selectedQuestions}
+                  />
                 }
               />
               <Route
                 path="/selected-questions"
-                element={<SelectedQuestionsPage selectedQuestions={selectedQuestions} onDeselect={setSelectedQuestions} />}
+                element={
+                  <SelectedQuestionsPage
+                    selectedQuestions={selectedQuestions}
+                    onDeselect={setSelectedQuestions}
+                  />
+                }
               />
             </>
           ) : (
@@ -58,10 +70,10 @@ function App() {
           {/* Student Routes */}
           {isAuthenticated && userRole === 'student' ? (
             <>
-              <Route path="/student-dashboard" element={<StudentDashboard />} />
-              <Route path="/take-test" element={<TakeTest selectedQuestions={selectedQuestions} />} />
-              <Route path="/my-submissions" element={<StudentSubmissions />} />
-              <Route path="/submit-solution/:id" element={<SubmitSolution />} />
+              <Route path="/student-dashboard" element={<StudentDashboard backendUrl={BACKEND_URL} />} />
+              <Route path="/take-test" element={<TakeTest backendUrl={BACKEND_URL} selectedQuestions={selectedQuestions} />} />
+              <Route path="/my-submissions" element={<StudentSubmissions backendUrl={BACKEND_URL} />} />
+              <Route path="/submit-solution/:id" element={<SubmitSolution backendUrl={BACKEND_URL} />} />
             </>
           ) : (
             <Route path="/student-dashboard" element={<Navigate to="/" />} />
