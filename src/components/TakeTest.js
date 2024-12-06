@@ -291,8 +291,8 @@ const TakeTest = ({ selectedQuestions = [] }) => {
           <QuestionContainer key={selectedQuestions[currentQuestionIndex]._id}>
             {selectedQuestions[currentQuestionIndex] && (
               <>
-                <Title>{selectedQuestions[currentQuestionIndex].questionTitle}</Title>
-                <Description>{selectedQuestions[currentQuestionIndex].questionDescription}</Description>
+                <Title>{selectedQuestions[currentQuestionIndex]?.title}</Title>
+                <Description>{selectedQuestions[currentQuestionIndex]?.description}</Description>
               </>
             )}
 
