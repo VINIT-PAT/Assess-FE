@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/Assess-FE/static/css/main.39770f3e.css",
-    "main.js": "/Assess-FE/static/js/main.7f9cf9ea.js",
+    "main.js": "/Assess-FE/static/js/main.b45b35cf.js",
     "static/js/453.8ab44547.chunk.js": "/Assess-FE/static/js/453.8ab44547.chunk.js",
     "static/media/Exam-logo.jpg": "/Assess-FE/static/media/Exam-logo.923bba8db2db63c91e54.jpg",
     "static/media/Ques3.jpg": "/Assess-FE/static/media/Ques3.aa6b5759393b14579f8c.jpg",
@@ -25,11 +25,11 @@
     "static/media/bootstrap-icons.woff2?": "/Assess-FE/static/media/bootstrap-icons.b7bcc075b395c14ce8c2.woff2",
     "index.html": "/Assess-FE/index.html",
     "main.39770f3e.css.map": "/Assess-FE/static/css/main.39770f3e.css.map",
-    "main.7f9cf9ea.js.map": "/Assess-FE/static/js/main.7f9cf9ea.js.map",
+    "main.b45b35cf.js.map": "/Assess-FE/static/js/main.b45b35cf.js.map",
     "453.8ab44547.chunk.js.map": "/Assess-FE/static/js/453.8ab44547.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.39770f3e.css",
-    "static/js/main.7f9cf9ea.js"
+    "static/js/main.b45b35cf.js"
   ]
 }
