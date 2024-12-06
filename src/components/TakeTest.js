@@ -113,32 +113,77 @@ const Notification = styled.div`
   opacity: ${(props) => (props.show ? 1 : 0)};
 `;
 
+const ConfirmationDialog = styled.div`
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 20px;
+  border-radius: 8px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+`;
+
+const ConfirmationButtons = styled.div`
+  display: flex;
+  justify-content: space-around;
+  margin-top: 15px;
+`;
+
+const NavigationButtons = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+`;
+
+const EndTestButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+`;
+
 const TakeTest = ({ selectedQuestions = [] }) => {
   const navigate = useNavigate();
   const [responses, setResponses] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [testEnded, setTestEnded] = useState(false);
+  const [successMessage, setSuccessMessage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
-    const initialResponses = selectedQuestions.map((question) => ({
-      questionId: question._id,
-      code: '',
-      output: 'No output yet.',
-      error: null,
-    }));
-    setResponses(initialResponses);
+    if (selectedQuestions.length > 0) {
+      const initialResponses = selectedQuestions.map((question) => ({
+        questionId: question._id,
+        code: '',
+        output: 'No output yet.',
+        error: null,
+      }));
+      setResponses(initialResponses);
+    }
   }, [selectedQuestions]);
+
+  if (!selectedQuestions.length) {
+    return <p>No questions selected for the test.</p>;
+  }
 
   const currentQuestion = selectedQuestions[currentQuestionIndex];
 
   const handleEditorChange = (newValue, questionId) => {
-    setResponses((prev) =>
-      prev.map((res) => (res.questionId === questionId ? { ...res, code: newValue } : res))
+    setResponses((prevResponses) =>
+      prevResponses.map((res) =>
+        res.questionId === questionId ? { ...res, code: newValue } : res
+      )
     );
   };
 
   const handleExecute = async (questionId) => {
     setLoading(true);
+    setErrorMessage(null);
+
     try {
       const responseItem = responses.find((res) => res.questionId === questionId);
       const payload = {
@@ -147,20 +192,14 @@ const TakeTest = ({ selectedQuestions = [] }) => {
         versionIndex: '0',
       };
 
-      const response = await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}/api/execute`,
-        payload
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/execute`, payload);
+      const updatedResponses = responses.map((res) =>
+        res.questionId === questionId ? { ...res, output: response.data.output || 'Execution completed.' } : res
       );
-
-      setResponses((prev) =>
-        prev.map((res) =>
-          res.questionId === questionId
-            ? { ...res, output: response.data.output || 'Execution completed.' }
-            : res
-        )
-      );
+      setResponses(updatedResponses);
     } catch (error) {
-      console.error('Execution error:', error);
+      console.error('Error executing code:', error);
+      setErrorMessage('Failed to execute. Please check your code.');
     } finally {
       setLoading(false);
     }
@@ -170,10 +209,14 @@ const TakeTest = ({ selectedQuestions = [] }) => {
     <>
       <GlobalStyle />
       <Container>
-        {currentQuestion ? (
+        {testEnded ? (
+          <Notification success={true} show={true}>
+            Test has been ended. You have completed all questions.
+          </Notification>
+        ) : (
           <QuestionContainer key={currentQuestion._id}>
-            <Title>{currentQuestion.title || 'Untitled Question'}</Title>
-            <Description>{currentQuestion.description || 'No description provided.'}</Description>
+            <Title>{currentQuestion.questionTitle || 'Untitled Question'}</Title>
+            <Description>{currentQuestion.questionDescription || 'No description available.'}</Description>
             <EditorContainer>
               <MonacoEditor
                 height="300"
@@ -184,12 +227,39 @@ const TakeTest = ({ selectedQuestions = [] }) => {
                 }
               />
             </EditorContainer>
-            <Button onClick={() => handleExecute(currentQuestion._id)} disabled={loading}>
-              Execute
-            </Button>
+            <div>
+              <Button onClick={() => handleExecute(currentQuestion._id)} disabled={loading}>
+                Execute
+              </Button>
+            </div>
+            <OutputContainer>
+              <OutputTitle>Output:</OutputTitle>
+              <OutputText>{responses[currentQuestionIndex]?.output || 'No output yet.'}</OutputText>
+            </OutputContainer>
+            {errorMessage && <Notification success={false} show={true}>{errorMessage}</Notification>}
+            {successMessage && <Notification success={true} show={true}>{successMessage}</Notification>}
           </QuestionContainer>
-        ) : (
-          <p>No questions available.</p>
+        )}
+        <NavigationButtons>
+          <Button
+            onClick={() => setCurrentQuestionIndex((prev) => Math.max(0, prev - 1))}
+            disabled={currentQuestionIndex === 0}
+          >
+            Previous
+          </Button>
+          <Button
+            onClick={() =>
+              setCurrentQuestionIndex((prev) => Math.min(selectedQuestions.length - 1, prev + 1))
+            }
+            disabled={currentQuestionIndex === selectedQuestions.length - 1}
+          >
+            Next
+          </Button>
+        </NavigationButtons>
+        {!testEnded && (
+          <EndTestButtonContainer>
+            <Button onClick={() => setTestEnded(true)}>End Test</Button>
+          </EndTestButtonContainer>
         )}
       </Container>
     </>
