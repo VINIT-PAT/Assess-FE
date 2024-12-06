@@ -187,26 +187,30 @@ const TakeTest = ({ selectedQuestions = [] }) => {
 
     try {
       const responseItem = responses.find((res) => res.questionId === selectedQuestionForSubmit);
-      const payload = {
-        questionId: selectedQuestionForSubmit,
-        code: responseItem.code || '',
-        output: responseItem.output || '',
-      };
-      console.log('Submitting payload:', payload);
-      await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/submissions`, payload);
-      setSuccessMessage('Submission successful!');
+      if (responseItem) {
+        const payload = {
+          questionId: selectedQuestionForSubmit,
+          code: responseItem.code || '',
+          output: responseItem.output || '',
+        };
+        console.log('Submitting payload:', payload);
+        await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/submissions`, payload);
+        setSuccessMessage('Submission successful!');
 
-      // Hide success message after 2 seconds
-      setTimeout(() => {
-        setSuccessMessage(null);
-      }, 2000);
+        // Hide success message after 2 seconds
+        setTimeout(() => {
+          setSuccessMessage(null);
+        }, 2000);
 
-      // Automatically navigate to the next question after successful submission
-      if (currentQuestionIndex < selectedQuestions.length - 1) {
-        setCurrentQuestionIndex(currentQuestionIndex + 1);
+        // Automatically navigate to the next question after successful submission
+        if (currentQuestionIndex < selectedQuestions.length - 1) {
+          setCurrentQuestionIndex(currentQuestionIndex + 1);
+        } else {
+          setTestEnded(true);
+          navigate('/student-dashboard');
+        }
       } else {
-        setTestEnded(true);
-        navigate('/student-dashboard');
+        setErrorMessage('Invalid response item.');
       }
     } catch (error) {
       console.error('Error submitting code:', error);
@@ -227,17 +231,21 @@ const TakeTest = ({ selectedQuestions = [] }) => {
 
     try {
       const responseItem = responses.find((res) => res.questionId === questionId);
-      const payload = {
-        script: responseItem.code || '',
-        language: 'python3',
-        versionIndex: '0',
-      };
+      if (responseItem) {
+        const payload = {
+          script: responseItem.code || '',
+          language: 'python3',
+          versionIndex: '0',
+        };
 
-      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/execute`, payload);
-      const updatedResponses = responses.map((res) =>
-        res.questionId === questionId ? { ...res, output: response.data.output || 'Execution completed.' } : res
-      );
-      setResponses(updatedResponses);
+        const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/execute`, payload);
+        const updatedResponses = responses.map((res) =>
+          res.questionId === questionId ? { ...res, output: response.data.output || 'Execution completed.' } : res
+        );
+        setResponses(updatedResponses);
+      } else {
+        setErrorMessage('Invalid response item.');
+      }
     } catch (error) {
       console.error('Error executing code:', error);
       setErrorMessage('Failed to execute. Please check your code.');
@@ -279,89 +287,83 @@ const TakeTest = ({ selectedQuestions = [] }) => {
   const editorOptions = {
     selectOnLineNumbers: true,
     automaticLayout: true,
-    lineNumbers: 'on',
   };
 
   return (
-    <div>
+    <>
       <GlobalStyle />
       <Container>
-        <Title>{selectedQuestions[currentQuestionIndex].questionTitle}</Title>
-        <Description>{selectedQuestions[currentQuestionIndex].questionDescription}</Description>
+        {testEnded && <h2>Test has ended. Thank you for participating!</h2>}
+        {!testEnded && (
+          <>
+            <QuestionContainer>
+              <Title>{selectedQuestions[currentQuestionIndex].questionTitle}</Title>
+              <Description>{selectedQuestions[currentQuestionIndex].questionDescription}</Description>
+              <EditorContainer>
+                <MonacoEditor
+                  width="100%"
+                  height="100%"
+                  language="javascript"
+                  theme="vs-dark"
+                  value={responses[currentQuestionIndex]?.code || ''}
+                  options={editorOptions}
+                  onChange={(newValue) =>
+                    handleEditorChange(newValue, selectedQuestions[currentQuestionIndex]?.questionId)
+                  }
+                />
+              </EditorContainer>
 
-        <QuestionContainer>
-          <EditorContainer>
-            <MonacoEditor
-              width="100%"
-              height="100%"
-              language="javascript"
-              theme="vs-dark"
-              value={responses[currentQuestionIndex].code}
-              options={editorOptions}
-              onChange={(newValue) =>
-                handleEditorChange(newValue, selectedQuestions[currentQuestionIndex]._id)
-              }
-            />
-          </EditorContainer>
+              <NavigationButtons>
+                <Button onClick={() => handleNavigation('prev')} disabled={currentQuestionIndex === 0}>
+                  Previous
+                </Button>
+                <Button
+                  onClick={(e) => handleSubmit(e, selectedQuestions[currentQuestionIndex].questionId)}
+                >
+                  Submit
+                </Button>
+                <ExecuteButton
+                  onClick={() => handleExecute(selectedQuestions[currentQuestionIndex].questionId)}
+                  disabled={loading}
+                >
+                  {loading ? 'Executing...' : 'Execute'}
+                </ExecuteButton>
+                <Button onClick={() => handleNavigation('next')} disabled={currentQuestionIndex === selectedQuestions.length - 1}>
+                  Next
+                </Button>
+              </NavigationButtons>
+            </QuestionContainer>
 
-          <Button
-            onClick={(e) => handleSubmit(e, selectedQuestions[currentQuestionIndex]._id)}
-            disabled={loading}
-          >
-            Submit Code
-          </Button>
-          <ExecuteButton
-            onClick={() => handleExecute(selectedQuestions[currentQuestionIndex]._id)}
-            disabled={loading}
-          >
-            Execute Code
-          </ExecuteButton>
-        </QuestionContainer>
+            {errorMessage && <Notification show>{errorMessage}</Notification>}
+            {successMessage && <Notification success show>{successMessage}</Notification>}
 
-        {successMessage && <Notification success show={!!successMessage}>{successMessage}</Notification>}
-        {errorMessage && <Notification success={false} show={!!errorMessage}>{errorMessage}</Notification>}
+            <EndTestButtonContainer>
+              <Button onClick={handleEndTest}>End Test</Button>
+            </EndTestButtonContainer>
+          </>
+        )}
 
-        <OutputContainer>
-          <OutputTitle>Output:</OutputTitle>
-          <OutputText>{responses[currentQuestionIndex].output}</OutputText>
-        </OutputContainer>
+        {showSubmitConfirmation && (
+          <ConfirmationDialog>
+            <h3>Are you sure you want to submit your answer for this question?</h3>
+            <ConfirmationButtons>
+              <Button onClick={confirmSubmit}>Yes</Button>
+              <Button onClick={cancelSubmit}>No</Button>
+            </ConfirmationButtons>
+          </ConfirmationDialog>
+        )}
 
-        <NavigationButtons>
-          <Button onClick={() => handleNavigation('prev')} disabled={currentQuestionIndex === 0}>
-            Previous Question
-          </Button>
-          <Button onClick={() => handleNavigation('next')} disabled={currentQuestionIndex === selectedQuestions.length - 1}>
-            Next Question
-          </Button>
-        </NavigationButtons>
-
-        <EndTestButtonContainer>
-          <Button onClick={handleEndTest} disabled={testEnded}>
-            End Test
-          </Button>
-        </EndTestButtonContainer>
+        {showConfirmation && (
+          <ConfirmationDialog>
+            <h3>Are you sure you want to end the test?</h3>
+            <ConfirmationButtons>
+              <Button onClick={confirmEndTest}>Yes</Button>
+              <Button onClick={cancelEndTest}>No</Button>
+            </ConfirmationButtons>
+          </ConfirmationDialog>
+        )}
       </Container>
-
-      {showConfirmation && (
-        <ConfirmationDialog>
-          <p>Are you sure you want to end the test?</p>
-          <ConfirmationButtons>
-            <Button onClick={confirmEndTest}>Yes</Button>
-            <Button onClick={cancelEndTest}>No</Button>
-          </ConfirmationButtons>
-        </ConfirmationDialog>
-      )}
-
-      {showSubmitConfirmation && (
-        <ConfirmationDialog>
-          <p>Are you sure you want to submit this question?</p>
-          <ConfirmationButtons>
-            <Button onClick={confirmSubmit}>Yes</Button>
-            <Button onClick={cancelSubmit}>No</Button>
-          </ConfirmationButtons>
-        </ConfirmationDialog>
-      )}
-    </div>
+    </>
   );
 };
 
