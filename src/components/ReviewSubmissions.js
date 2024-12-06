@@ -6,7 +6,7 @@ import styled from "styled-components";
 import reviewback from "../assets/images/Ques3.jpg"; // Correct the file path and extension
 
 // Set the base URL from the environment variable
-const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || "http://localhost:5000/api";
+const API_BASE_URL = process.env.REACT_APP_BACKEND_URL ;
 
 // Styled Components
 const BackgroundWrapper = styled.div`
